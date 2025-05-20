@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add custom animations or vibrant styles if needed */
+body {
+  background: linear-gradient(to right, #f9d423, #ff4e50);
+}
+/* Smooth fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Pulse animation for attention */
+@keyframes pulseSlow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-in forwards;
+}
+
+.pulse-slow {
+  animation: pulseSlow 2s ease-in-out infinite;
+}
+
+/* Button shadow hover effect */
+.btn-shadow-hover:hover {
+  box-shadow: 0 8px 20px rgba(255, 255, 0, 0.6);
+  transform: scale(1.05);
+  transition: all 0.3s ease-in-out;
+}
