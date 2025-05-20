@@ -129,29 +129,29 @@ function App() {
     setQuizStarted(true);
   };
 
-  const selectOption = (option) => {
-    // Play click sound on option click
-    if (clickAudioRef.current) {
-      clickAudioRef.current.currentTime = 0;
-      clickAudioRef.current.play();
-    }
+const selectOption = (option) => {
+  if (clickAudioRef.current && typeof clickAudioRef.current.currentTime === "number") {
+    clickAudioRef.current.currentTime = 0;
+    clickAudioRef.current.play().catch(() => {}); // ignore play promise rejection
+  }
 
-      // Play wow sound just after click sound
-    if (wowAudioRef.current) {
-      setTimeout(() => {
+  if (wowAudioRef.current && typeof wowAudioRef.current.currentTime === "number") {
+    setTimeout(() => {
+      if (wowAudioRef.current) {
         wowAudioRef.current.currentTime = 0;
-        wowAudioRef.current.play();
-      }, 150); // delay slightly so click and wow sounds don't clash badly
-    }
+        wowAudioRef.current.play().catch(() => {});
+      }
+    }, 150);
+  }
 
+  setAnswers((prev) => [...prev, option]);
+  if (currentQuestionIndex < questions.length - 1) {
+    setCurrentQuestionIndex((prev) => prev + 1);
+  } else {
+    setQuizFinished(true);
+  }
+};
 
-    setAnswers((prev) => [...prev, option]);
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex((prev) => prev + 1);
-    } else {
-      setQuizFinished(true);
-    }
-  };
 
   // Play vibe celebration sound when quiz finishes
 useEffect(() => {
